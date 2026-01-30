@@ -8,7 +8,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await FirebaseBootstrap.tryInitialize();
-  await AuthService().trySignInAnonymously();
+  if (FirebaseBootstrap.initialized) {
+    await AuthService().trySignInAnonymously();
+  }
 
   runApp(const App());
 }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../controllers/app_controller.dart';
-import '../../data/mock/mock_questions.dart';
+import '../../data/question_json_repository.dart';
+import '../../data/simulado_mcq_repository.dart';
 import '../../models/question.dart';
 import '../profile/profile_screen.dart';
 import 'simulado_screen.dart';
@@ -10,9 +11,79 @@ import 'simulado_screen.dart';
 class SimuladoSetupScreen extends StatelessWidget {
   const SimuladoSetupScreen({super.key});
 
+  static const int _questionsPerSimulado = 20;
+  static const int _questionsPerSimulado60 = 60;
+
+  Future<void> _startSimulado(
+    BuildContext context, {
+    required String title,
+    required Future<List<Question>> Function() loadQuestions,
+    required String mode,
+    required String? subjectId,
+  }) async {
+    final repo = QuestionJsonRepository();
+
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const AlertDialog(
+        content: Padding(
+          padding: EdgeInsets.symmetric(vertical: 12),
+          child: Row(
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(width: 16),
+              Expanded(child: Text('Carregando questões...')),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    try {
+      final raw = await loadQuestions();
+      final app = context.read<AppController>();
+      final key = mode == 'mixed' ? 'simulado:mixed' : 'simulado:${subjectId ?? 'unknown'}';
+      final questions = app.pickNonRepeating(
+        poolKey: key,
+        pool: raw,
+        count: _questionsPerSimulado,
+      );
+
+      if (!context.mounted) return;
+      Navigator.of(context).pop(); // fecha loading
+
+      if (questions.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Nenhuma questão encontrada no questions.json.')),
+        );
+        return;
+      }
+
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => SimuladoScreen(
+            title: title,
+            questions: questions,
+            mode: mode,
+            subjectId: subjectId,
+          ),
+        ),
+      );
+    } catch (_) {
+      if (!context.mounted) return;
+      Navigator.of(context).pop(); // fecha loading
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Falha ao carregar questions.json.')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final app = context.watch<AppController>();
+    final repo = QuestionJsonRepository();
+    final mcqRepo = SimuladoMcqRepository();
 
     return Scaffold(
       appBar: AppBar(
@@ -38,47 +109,126 @@ class SimuladoSetupScreen extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 16),
         children: [
           const _Header(),
-          ...app.subjects.map((s) {
-            final questions = MockQuestions.bySubjectId(s.id);
-            return _SimuladoCard(
-              title: s.title,
-              subtitle: '${questions.length} questões • 60:00',
-              enabled: questions.isNotEmpty,
-              onStart: () {
+          _SimuladoCard(
+            title: 'Simulado 60 (A–E)',
+            subtitle: '10 Português + 10 Matemática + 40 Específicas (por área)',
+            enabled: true,
+            onStart: () async {
+              final pickedArea = await showDialog<SimuladoArea?>(
+                context: context,
+                builder: (context) => const _AreaPickerDialog(),
+              );
+              if (pickedArea == null || !context.mounted) return;
+
+              // Loading
+              showDialog<void>(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => const AlertDialog(
+                  content: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    child: Row(
+                      children: [
+                        CircularProgressIndicator(),
+                        SizedBox(width: 16),
+                        Expanded(child: Text('Montando simulado 60...')),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+
+              try {
+                final ptAll = await mcqRepo.loadPortuguese();
+                final matAll = await mcqRepo.loadMath();
+                final tecAll = await mcqRepo.loadSpecific(pickedArea.key);
+
+                final app = context.read<AppController>();
+                final pt = app.pickNonRepeating(
+                  poolKey: 'sim60:${pickedArea.key}:pt',
+                  pool: ptAll,
+                  count: 10,
+                );
+                final mat = app.pickNonRepeating(
+                  poolKey: 'sim60:${pickedArea.key}:mat',
+                  pool: matAll,
+                  count: 10,
+                );
+                final tec = app.pickNonRepeating(
+                  poolKey: 'sim60:${pickedArea.key}:tec',
+                  pool: tecAll,
+                  count: 40,
+                );
+
+                final all = <Question>[...pt, ...mat, ...tec];
+                // Se algum pool estiver curto, garante no máximo 60 e embaralha.
+                all.shuffle();
+                final questions = all.length > _questionsPerSimulado60
+                    ? all.take(_questionsPerSimulado60).toList(growable: false)
+                    : all;
+
+                if (!context.mounted) return;
+                Navigator.of(context).pop(); // fecha loading
+
+                if (questions.length < _questionsPerSimulado60) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Banco insuficiente para 60 questões. Gerou ${questions.length}. '
+                        'Rode o script para gerar o simulado_mcq.json completo.',
+                      ),
+                    ),
+                  );
+                }
+
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (_) => SimuladoScreen(
-                      title: 'Simulado - ${s.title}',
+                      title: 'Simulado 60 • ${pickedArea.label}',
                       questions: questions,
-                      mode: 'subject',
-                      subjectId: s.id,
+                      mode: 'sim60',
+                      subjectId: 'mix',
                     ),
                   ),
+                );
+              } catch (_) {
+                if (!context.mounted) return;
+                Navigator.of(context).pop(); // fecha loading
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Falha ao ler assets/questions/simulado_mcq.json.')),
+                );
+              }
+            },
+          ),
+          ...app.subjects.map((s) {
+            return _SimuladoCard(
+              title: s.title,
+              subtitle: '$_questionsPerSimulado questões aleatórias • 60:00',
+              enabled: true,
+              onStart: () async {
+                await _startSimulado(
+                  context,
+                  title: 'Simulado - ${s.title}',
+                  loadQuestions: () => repo.loadForSubjectId(s.id),
+                  mode: 'subject',
+                  subjectId: s.id,
                 );
               },
             );
           }),
           Builder(
             builder: (context) {
-              final List<Question> mixed = [
-                ...MockQuestions.portuguese,
-                ...MockQuestions.math,
-                ...MockQuestions.smsCebraspe,
-              ];
               return _SimuladoCard(
                 title: 'Misto',
-                subtitle: '${mixed.length} questões • 60:00',
-                enabled: mixed.isNotEmpty,
-                onStart: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => SimuladoScreen(
-                        title: 'Simulado - Misto',
-                        questions: mixed,
-                        mode: 'mixed',
-                        subjectId: null,
-                      ),
-                    ),
+                subtitle: '$_questionsPerSimulado questões aleatórias • 60:00',
+                enabled: true,
+                onStart: () async {
+                  await _startSimulado(
+                    context,
+                    title: 'Simulado - Misto',
+                    loadQuestions: repo.loadMixed,
+                    mode: 'mixed',
+                    subjectId: null,
                   );
                 },
               );
@@ -117,7 +267,7 @@ class _Header extends StatelessWidget {
                 children: [
                   Text('60 minutos', style: TextStyle(fontWeight: FontWeight.w900)),
                   SizedBox(height: 4),
-                  Text('Cebraspe: +10 certo / -5 errado.'),
+                  Text('Cebraspe: +1 certo / -1 errado • Pular: 0'),
                 ],
               ),
             ),
@@ -164,6 +314,43 @@ class _SimuladoCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _AreaPickerDialog extends StatefulWidget {
+  const _AreaPickerDialog();
+
+  @override
+  State<_AreaPickerDialog> createState() => _AreaPickerDialogState();
+}
+
+class _AreaPickerDialogState extends State<_AreaPickerDialog> {
+  SimuladoArea? _selected = SimuladoAreas.operacao;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Área de atuação'),
+      content: DropdownButtonFormField<SimuladoArea>(
+        value: _selected,
+        decoration: const InputDecoration(border: OutlineInputBorder()),
+        items: [
+          for (final a in SimuladoAreas.all)
+            DropdownMenuItem(value: a, child: Text(a.label)),
+        ],
+        onChanged: (v) => setState(() => _selected = v),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(null),
+          child: const Text('Cancelar'),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(_selected),
+          child: const Text('Iniciar'),
+        ),
+      ],
     );
   }
 }

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 
 import '../models/question.dart';
+import '../models/user_response.dart';
+import '../utils/scoring.dart';
 
 class SimuladoController extends ChangeNotifier {
   final List<Question> questions;
@@ -11,7 +13,8 @@ class SimuladoController extends ChangeNotifier {
   SimuladoController({
     required this.questions,
     this.duration = const Duration(minutes: 60),
-  }) : _remaining = duration;
+  })  : _remaining = duration,
+        _responses = List<UserResponse?>.filled(questions.length, null, growable: false);
 
   int _index = 0;
   int get index => _index;
@@ -23,8 +26,15 @@ class SimuladoController extends ChangeNotifier {
   int _wrong = 0;
   int get wrong => _wrong;
 
-  int _points = 0;
-  int get points => _points;
+  int get skipped => _responses.where((r) => r?.type == UserResponseType.skipped).length;
+
+  List<UserResponse> get responses => _responses.whereType<UserResponse>().toList(growable: false);
+
+  /// Pontuação bruta (pode ser negativa).
+  int get rawPoints => calculateRawScore(responses);
+
+  /// Pontuação líquida (nunca negativa) para ranking/feedback.
+  int get liquidPoints => calculateLiquidScore(responses);
 
   int? _selectedIndex;
   int? get selectedIndex => _selectedIndex;
@@ -39,6 +49,7 @@ class SimuladoController extends ChangeNotifier {
   Duration get remaining => _remaining;
 
   Timer? _timer;
+  final List<UserResponse?> _responses;
 
   void start() {
     _timer?.cancel();
@@ -67,12 +78,20 @@ class SimuladoController extends ChangeNotifier {
 
     if (optionIndex == current.correctIndex) {
       _correct += 1;
-      _points += 10;
+      _responses[_index] = UserResponse(questionId: current.id, type: UserResponseType.correct);
     } else {
       _wrong += 1;
-      _points -= 5;
+      _responses[_index] = UserResponse(questionId: current.id, type: UserResponseType.wrong);
     }
 
+    notifyListeners();
+  }
+
+  void skip() {
+    if (_finished || _answered) return;
+    _selectedIndex = null;
+    _answered = true;
+    _responses[_index] = UserResponse(questionId: current.id, type: UserResponseType.skipped);
     notifyListeners();
   }
 
@@ -98,11 +117,13 @@ class SimuladoController extends ChangeNotifier {
     _index = 0;
     _correct = 0;
     _wrong = 0;
-    _points = 0;
     _answered = false;
     _selectedIndex = null;
     _finished = false;
     _remaining = duration;
+    for (var i = 0; i < _responses.length; i++) {
+      _responses[i] = null;
+    }
     notifyListeners();
   }
 

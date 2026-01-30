@@ -1,0 +1,2024 @@
+import '../models/question.dart';
+
+/// Dificuldade para o banco de questões.
+enum Difficulty { facil, media, dificil }
+
+/// Questão “base” no formato do banco (Cebraspe: Certo/Errado).
+class BankQuestion {
+  final String id;
+  final String materia;
+  final String bloco;
+  final String enunciado;
+  final bool respostaCorreta; // true = Certo, false = Errado
+  final String explicacao;
+  final Difficulty dificuldade;
+
+  const BankQuestion({
+    required this.id,
+    required this.materia,
+    required this.bloco,
+    required this.enunciado,
+    required this.respostaCorreta,
+    required this.explicacao,
+    required this.dificuldade,
+  });
+}
+
+/// Banco principal (exportável). Você pode fazer `questionBank.toList()..shuffle()`.
+const List<BankQuestion> questionBank = [
+  // -------------------------
+  // Português (10)
+  // -------------------------
+  BankQuestion(
+    id: 'pt-001',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Na frase “A Petrobras divulgou o relatório, porém não detalhou os custos operacionais”, a substituição de “porém” por “todavia” preserva o sentido e a correção gramatical.',
+    respostaCorreta: true,
+    explicacao: '“Porém” e “todavia” são conectivos adversativos; mantêm a ideia de contraste.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-002',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Os indicadores de segurança foram revisados pela equipe da plataforma”, a reescrita para voz ativa “A equipe da plataforma revisou os indicadores de segurança” mantém o sentido essencial.',
+    respostaCorreta: true,
+    explicacao: 'A transformação voz passiva → ativa preserva o núcleo sem alterar a relação agente/paciente.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-003',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Na oração “Fazem dois anos que a unidade de refino opera com manutenção programada”, o verbo está corretamente flexionado.',
+    respostaCorreta: false,
+    explicacao: 'No sentido de tempo decorrido, “fazer” é impessoal: “Faz dois anos…”.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-004',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Entregaram-se os relatórios de inspeção às gerências”, a concordância verbal está correta, pois o sujeito é “os relatórios”.',
+    respostaCorreta: true,
+    explicacao: 'Em voz passiva sintética com “se”, o verbo concorda com o sujeito paciente.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-005',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Os técnicos obedeceram à norma interna de SMS”, o emprego de crase é obrigatório.',
+    respostaCorreta: true,
+    explicacao: '“Obedecer” rege preposição “a” e “norma” admite artigo “a” → “à”.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-006',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “A inspeção foi feita a mão”, o correto seria manter a expressão sem crase, por se tratar de locução adverbial.',
+    respostaCorreta: false,
+    explicacao: 'Locução adverbial feminina costuma exigir crase: “à mão”.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-007',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “É necessário que os procedimentos sejam cumpridos”, a forma verbal “sejam” está no subjuntivo por expressar certeza.',
+    respostaCorreta: false,
+    explicacao: 'O subjuntivo aparece por valor de necessidade/hipótese (“é necessário que…”), não de certeza.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-008',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'No trecho “O incidente foi controlado rapidamente; por isso, a produção foi retomada”, a expressão “por isso” indica conclusão.',
+    respostaCorreta: true,
+    explicacao: '“Por isso” funciona como conectivo conclusivo (efeito/resultado do anterior).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-009',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Havia informações confidenciais nos relatórios”, é correta a reescrita “Haviam informações confidenciais nos relatórios”.',
+    respostaCorreta: false,
+    explicacao: '“Haver” no sentido de existir é impessoal e fica no singular: “Havia…”.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-010',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em um texto técnico, a frase “A equipe mitigou os riscos, pois revisou as permissões de trabalho” apresenta relação de causa.',
+    respostaCorreta: true,
+    explicacao: '“Pois” (nesse uso) introduz causa/justificativa para a mitigação.',
+    dificuldade: Difficulty.facil,
+  ),
+
+  // -------------------------
+  // Matemática / RLM (10)
+  // -------------------------
+  BankQuestion(
+    id: 'mat-001',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se a probabilidade de falha de um sensor em um dia é 2%, então a probabilidade de ele NÃO falhar nesse dia é 98%.',
+    respostaCorreta: true,
+    explicacao: 'Regra do complemento: \(P(\neg A)=1-P(A)\).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'mat-002',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Em um teste com dois alarmes independentes, com probabilidades de disparo 0,1 e 0,2, a probabilidade de ambos dispararem é 0,3.',
+    respostaCorreta: false,
+    explicacao: 'Independentes: \(0{,}1\\times 0{,}2=0{,}02\), não 0,3.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-003',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(A\\subset B\\) e \(A\\neq B\\), então \(A\\cup B = B\\).',
+    respostaCorreta: true,
+    explicacao: 'Se A está contido em B, unir A com B não adiciona elementos: resulta em B.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-004',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(f(x)=2x+3\\), então \(f(4)=11\\).',
+    respostaCorreta: true,
+    explicacao: 'Substituindo: \(2\\cdot 4+3=8+3=11\).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'mat-005',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'O número de maneiras de escolher 2 válvulas dentre 6, sem considerar a ordem, é 30.',
+    respostaCorreta: false,
+    explicacao: 'Combinação: \(\\binom{6}{2}=15\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-006',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Em um conjunto de 50 relatórios, 20 são de SMS e 15 são de manutenção. Se 5 são ambos, então há 30 relatórios que são de SMS ou de manutenção.',
+    respostaCorreta: true,
+    explicacao: 'União: \(20+15-5=30\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-007',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(P(A)=0{,}6\\) e \(P(B)=0{,}5\\) e A e B são eventos mutuamente exclusivos, então \(P(A\\cap B)=0{,}3\\).',
+    respostaCorreta: false,
+    explicacao: 'Mutuamente exclusivos: \(P(A\\cap B)=0\\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-008',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Em uma permutação de 5 procedimentos distintos (A, B, C, D, E), existem 120 sequências possíveis.',
+    respostaCorreta: true,
+    explicacao: 'Permutação simples: \(5!=120\).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'mat-009',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(f(x)=x^2\\), então a função é injetiva em todos os números reais.',
+    respostaCorreta: false,
+    explicacao: 'Não é injetiva em \(\\mathbb{R}\): \(f(2)=f(-2)=4\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-010',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se a chance de atraso de uma inspeção é 0,25, então a chance de ocorrer atraso em 2 inspeções independentes é 0,0625.',
+    respostaCorreta: true,
+    explicacao: 'Independentes: \(0{,}25^2=0{,}0625\).',
+    dificuldade: Difficulty.facil,
+  ),
+
+  // -------------------------
+  // SMS (Bloco I) (10)
+  // -------------------------
+  BankQuestion(
+    id: 'sms-001',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'A NR-06 atribui ao empregador a obrigação de fornecer EPI adequado ao risco, em perfeito estado de conservação e funcionamento.',
+    respostaCorreta: true,
+    explicacao: 'A NR-06 define responsabilidades do empregador e do empregado quanto ao EPI.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'sms-002',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Segundo a NR-10, a desenergização é dispensável quando o trabalho for executado por profissional habilitado e em baixa tensão.',
+    respostaCorreta: false,
+    explicacao: 'A regra é priorizar desenergização; exceções exigem justificativa e medidas de controle rigorosas.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-003',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'A NR-13 trata de caldeiras, vasos de pressão e tubulações, estabelecendo requisitos de inspeção de segurança e prontuário.',
+    respostaCorreta: true,
+    explicacao: 'O foco é integridade mecânica e segurança operacional de equipamentos pressurizados.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-004',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-33 (espaço confinado), a entrada pode ocorrer sem Permissão de Entrada e Trabalho (PET) quando o serviço durar menos de 15 minutos.',
+    respostaCorreta: false,
+    explicacao: 'PET é requisito de controle; tempo curto não elimina riscos de atmosfera/perigos do espaço confinado.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-005',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-35, o planejamento do trabalho em altura inclui análise de risco e definição de sistemas de proteção contra quedas.',
+    respostaCorreta: true,
+    explicacao: 'NR-35 exige planejamento, organização e execução com medidas preventivas.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'sms-006',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Em plataformas, o uso de EPI substitui completamente medidas de proteção coletiva, desde que o EPI seja certificado.',
+    respostaCorreta: false,
+    explicacao: 'A hierarquia de controles prioriza proteção coletiva; EPI é última barreira.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-007',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Para serviços em eletricidade (NR-10), procedimentos e documentação técnica (diagramas, esquemas) são parte das medidas de controle.',
+    respostaCorreta: true,
+    explicacao: 'NR-10 inclui documentação, procedimentos, capacitação e medidas organizacionais.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-008',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-13, a ausência de prontuário do vaso de pressão não impacta a inspeção, pois a inspeção se baseia apenas na medição de espessura atual.',
+    respostaCorreta: false,
+    explicacao: 'Prontuário/histórico é essencial para avaliar integridade, projeto, reparos e vida remanescente.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-009',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-33, o vigia deve permanecer fora do espaço confinado durante as atividades, mantendo comunicação e controle de entrada/saída.',
+    respostaCorreta: true,
+    explicacao: 'O vigia monitora e aciona resgate; não deve entrar para não se tornar vítima.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'sms-010',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'No trabalho em altura (NR-35), ancoragens e linhas de vida podem ser improvisadas, desde que suportem o peso do trabalhador.',
+    respostaCorreta: false,
+    explicacao: 'Sistemas devem ser projetados/inspecionados e atender requisitos técnicos; improviso eleva risco.',
+    dificuldade: Difficulty.media,
+  ),
+
+  // -------------------------
+  // Bloco II/III (Geral Técnico) (10)
+  // -------------------------
+  BankQuestion(
+    id: 'tec-001',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma planta de refino, o aumento de pressão em um vaso, mantendo-se o volume constante, tende a aumentar a temperatura do gás ideal, segundo a relação entre \(P\\) e \(T\\).',
+    respostaCorreta: true,
+    explicacao: 'Para gás ideal em volume constante: \(P\\propto T\) (Lei de Gay-Lussac).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-002',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em termodinâmica, a primeira lei afirma que a energia se cria e se destrói conforme o rendimento do equipamento.',
+    respostaCorreta: false,
+    explicacao: 'A 1ª lei é conservação de energia: não cria nem destrói, apenas transforma.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'tec-003',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em escoamento de fluidos, uma redução brusca de diâmetro tende a aumentar perdas de carga localizadas por turbulência e separação de fluxo.',
+    respostaCorreta: true,
+    explicacao: 'Contrações/expansões geram perdas localizadas (coeficientes \(K\)) por dissipação.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-004',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em um transmissor de pressão diferencial usado em medição de vazão por placa de orifício, o sinal de \(\\Delta P\) é diretamente proporcional à vazão.',
+    respostaCorreta: false,
+    explicacao: 'Em geral, vazão \(Q\\propto \\sqrt{\\Delta P}\) (regime apropriado).',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-005',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em controle de processos, uma ação integral no controlador tende a reduzir o erro em regime permanente, mas pode aumentar a tendência a oscilações se mal ajustada.',
+    respostaCorreta: true,
+    explicacao: 'Integral elimina offset, porém pode degradar estabilidade se ganho/tempo integral inadequados.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-006',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma bomba centrífuga, cavitação ocorre quando a pressão local cai abaixo da pressão de vapor do líquido, formando bolhas que podem danificar o rotor.',
+    respostaCorreta: true,
+    explicacao: 'Cavitação é fenômeno de vaporização local e colapso de bolhas; causa vibração/erosão.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-007',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em instrumentação, um sensor RTD (PT100) mede temperatura pela variação de resistência elétrica do elemento metálico.',
+    respostaCorreta: true,
+    explicacao: 'RTD varia resistência com temperatura (ex.: platina).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'tec-008',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma válvula de controle, o atuador pneumático converte sinal elétrico diretamente em deslocamento, sem necessidade de posicionador.',
+    respostaCorreta: false,
+    explicacao: 'Geralmente há conversão I/P (corrente-pressão) e/ou posicionador para precisão do curso.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-009',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em mecânica dos fluidos, o número de Reynolds é usado para caracterizar o regime de escoamento (laminar ou turbulento) em tubulações.',
+    respostaCorreta: true,
+    explicacao: 'Reynolds relaciona forças inerciais e viscosas; define transição de regimes.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'tec-010',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma unidade de separação óleo-água, aumentar o tempo de residência tende a favorecer a separação gravitacional, desde que não haja emulsão estável.',
+    respostaCorreta: true,
+    explicacao: 'Mais tempo facilita decantação; emulsões e turbulência podem impedir a separação.',
+    dificuldade: Difficulty.media,
+  ),
+
+  // -------------------------
+  // Português ( +10 )
+  // -------------------------
+  BankQuestion(
+    id: 'pt-011',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “A gerência solicitou que se revisassem os procedimentos de parada”, a concordância com “se” está adequada, pois o sujeito é “os procedimentos”.',
+    respostaCorreta: true,
+    explicacao: 'Na passiva sintética, o verbo pode concordar com o sujeito paciente (“os procedimentos”).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-012',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Na frase “Os dados de produção precisam ser analisado com cautela”, há erro de concordância nominal.',
+    respostaCorreta: true,
+    explicacao: 'O adjetivo deve concordar com “dados”: “analisados”.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-013',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Foi entregue à equipe de manutenção a ordem de serviço”, o uso de crase em “à equipe” é indevido, pois antes de palavras femininas não se usa crase.',
+    respostaCorreta: false,
+    explicacao: 'Há preposição + artigo: “entregue a a equipe” → “à equipe”.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-014',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Chegamos a uma conclusão a respeito do incidente”, não cabe crase em “a uma conclusão”.',
+    respostaCorreta: true,
+    explicacao: 'Há preposição “a”, mas o termo seguinte é masculino (“um/uma” sem artigo definido).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-015',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em textos de interpretação, o trecho “o evento foi mitigado após o bloqueio da linha” indica uma sequência temporal e causal entre bloqueio e mitigação.',
+    respostaCorreta: true,
+    explicacao: '“Após” marca tempo; no contexto, sugere relação de consequência da medida.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-016',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'A reescrita de “A equipe avaliou o cenário e decidiu evacuar” por “A equipe avaliou o cenário, decidindo evacuar” mantém necessariamente o mesmo sentido.',
+    respostaCorreta: false,
+    explicacao: 'O gerúndio pode alterar nuance (modo/resultado) e relação de simultaneidade, não é sempre equivalente.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'pt-017',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Na frase “Não se sabe se haverá parada não programada na planta”, o verbo “haver” pode ser flexionado no plural sem prejuízo da correção.',
+    respostaCorreta: false,
+    explicacao: '“Haver” no sentido de existir é impessoal: “haverá”, não “haverão”.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-018',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “A análise, a qual foi enviada ontem, contém recomendações”, o pronome relativo “a qual” retoma corretamente “análise”.',
+    respostaCorreta: true,
+    explicacao: 'Concorda em gênero e número com “análise” (feminino singular).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-019',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Recomenda-se, aos operadores, atenção redobrada”, a colocação pronominal está correta em norma-padrão.',
+    respostaCorreta: true,
+    explicacao: 'Com verbo no início, a ênclise é adequada: “Recomenda-se”.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-020',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'No trecho “Ainda que o procedimento exista, nem sempre é seguido”, a expressão “ainda que” introduz uma concessão.',
+    respostaCorreta: true,
+    explicacao: '“Ainda que” é conectivo concessivo (ideia de contraste com concessão).',
+    dificuldade: Difficulty.media,
+  ),
+
+  // -------------------------
+  // Matemática / RLM ( +10 )
+  // -------------------------
+  BankQuestion(
+    id: 'mat-011',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Em um sorteio de 1 relatório dentre 8 (3 de inspeção e 5 de operação), a probabilidade de sair um relatório de inspeção é 3/8.',
+    respostaCorreta: true,
+    explicacao: 'Casos favoráveis/total: \(3/8\).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'mat-012',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Ao lançar dois dados justos, a probabilidade de a soma ser 7 é 1/6.',
+    respostaCorreta: true,
+    explicacao: 'Há 6 combinações para soma 7 em 36 resultados: \(6/36=1/6\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-013',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(A\\cap B=\\varnothing\\), então \(A\\subseteq B\\).',
+    respostaCorreta: false,
+    explicacao: 'Interseção vazia significa disjuntos; não implica inclusão.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-014',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'O número de anagramas distintos da palavra “RISCO” é 60.',
+    respostaCorreta: false,
+    explicacao: 'São 5 letras distintas: \(5!=120\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-015',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'A quantidade de subconjuntos de um conjunto com 6 elementos é 64.',
+    respostaCorreta: true,
+    explicacao: 'Número de subconjuntos: \(2^n\). Para \(n=6\), \(2^6=64\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-016',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(f(x)=3x-2\\), então \(f^{-1}(y)=(y+2)/3\\).',
+    respostaCorreta: true,
+    explicacao: 'Isolando \(x\\): \(y=3x-2\\Rightarrow x=(y+2)/3\\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-017',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Em um sistema com 4 chaves, o número de sequências possíveis para acionar 2 chaves distintas, considerando a ordem, é 12.',
+    respostaCorreta: true,
+    explicacao: 'Arranjo: \(A_{4,2}=4\\cdot 3=12\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-018',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se 40% dos alarmes são críticos e 25% são falsos, então necessariamente 65% são alarmes críticos ou falsos.',
+    respostaCorreta: false,
+    explicacao: 'Sem a interseção (crítico e falso), não dá para somar diretamente.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'mat-019',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(P(A\\mid B)=P(A)\\), então A e B são independentes (com \(P(B)>0\\)).',
+    respostaCorreta: true,
+    explicacao: 'Definição: independência equivale a \(P(A\\mid B)=P(A)\) quando \(P(B)>0\).',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'mat-020',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Para conjuntos finitos, se \(A\\subseteq B\\), então \|A\| \\le \|B\|.',
+    respostaCorreta: true,
+    explicacao: 'Inclusão implica cardinalidade menor ou igual (em conjuntos finitos).',
+    dificuldade: Difficulty.facil,
+  ),
+
+  // -------------------------
+  // SMS (Bloco I) ( +10 )
+  // -------------------------
+  BankQuestion(
+    id: 'sms-011',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-06, é dever do empregado usar o EPI apenas quando houver fiscalização direta do empregador.',
+    respostaCorreta: false,
+    explicacao: 'O dever é usar corretamente sempre que exigido, não só sob fiscalização.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'sms-012',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-10, medidas de proteção coletiva, sinalização e bloqueio/etiquetagem (LOTO) compõem um conjunto de barreiras para reduzir risco elétrico.',
+    respostaCorreta: true,
+    explicacao: 'A NR-10 exige controles técnicos e administrativos, incluindo bloqueios e sinalização.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-013',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Em espaços confinados (NR-33), a avaliação atmosférica é irrelevante quando há ventilação natural.',
+    respostaCorreta: false,
+    explicacao: 'Atmosfera deve ser avaliada/monitorada; ventilação natural não garante ausência de gases/vapores.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-014',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-33, um plano de resgate deve existir antes da entrada no espaço confinado, pois improvisar resgate aumenta a chance de múltiplas vítimas.',
+    respostaCorreta: true,
+    explicacao: 'Resgate é parte do planejamento; sem plano, o vigia e terceiros podem se expor ao mesmo risco.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-015',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-35, o treinamento é dispensável para trabalhadores experientes que já executam atividades em altura há anos.',
+    respostaCorreta: false,
+    explicacao: 'A NR-35 exige capacitação/treinamento, independentemente de “experiência” informal.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'sms-016',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-13, alterações em vaso de pressão podem exigir reavaliação de integridade e atualização de prontuário/documentação.',
+    respostaCorreta: true,
+    explicacao: 'Mudanças e reparos devem ser registrados; podem impactar categoria, inspeções e condições de operação.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-017',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Em atividades com risco de queda em plataforma, o uso de cinturão tipo paraquedista é suficiente para eliminar a necessidade de ancoragem.',
+    respostaCorreta: false,
+    explicacao: 'Cinturão sem ancoragem/linha de vida não protege; é o sistema completo que previne/retém quedas.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-018',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-10, “zona controlada” e “zona de risco” são conceitos associados às distâncias de segurança e às medidas de controle em instalações elétricas.',
+    respostaCorreta: true,
+    explicacao: 'As zonas definem proximidade e requisitos de proteção/procedimentos.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-019',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-06, o Certificado de Aprovação (CA) do EPI é irrelevante quando o equipamento é fornecido por fabricante reconhecido.',
+    respostaCorreta: false,
+    explicacao: 'CA é requisito formal; garante conformidade com normas e autorização de uso.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-020',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Em espaço confinado, a presença de gás inflamável pode exigir controle de fontes de ignição e uso de equipamentos adequados, além de monitoramento contínuo.',
+    respostaCorreta: true,
+    explicacao: 'Controle de ignição e monitoramento são barreiras essenciais contra explosão/incêndio.',
+    dificuldade: Difficulty.media,
+  ),
+
+  // -------------------------
+  // Bloco II/III (Geral Técnico) ( +20 )
+  // -------------------------
+  BankQuestion(
+    id: 'tec-011',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em termodinâmica, para um gás ideal, manter \(T\) constante implica \(P\\cdot V\) constante (Lei de Boyle).',
+    respostaCorreta: true,
+    explicacao: 'Processo isotérmico: \(PV = \\text{constante}\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-012',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Na operação de uma coluna de destilação em refinaria, aumentar o refluxo tende a reduzir pureza do destilado, pois diminui a eficiência de separação.',
+    respostaCorreta: false,
+    explicacao: 'Aumentar refluxo normalmente melhora separação (mais contato vapor-líquido), elevando pureza.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-013',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em escoamento interno, perdas de carga distribuídas dependem do fator de atrito, do comprimento e do diâmetro da tubulação.',
+    respostaCorreta: true,
+    explicacao: 'Equação de Darcy–Weisbach relaciona \(h_f\\) a \(f\\), \(L/D\\) e velocidade.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-014',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em um controle de nível de vaso separador, aumentar o ganho proporcional sempre melhora a estabilidade e elimina oscilações.',
+    respostaCorreta: false,
+    explicacao: 'Ganho alto pode induzir instabilidade/oscilações; estabilidade depende do ajuste e do processo.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-015',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Um transmissor 4–20 mA pode ser configurado para representar a faixa de pressão do processo, e 4 mA normalmente indica o “zero” da faixa (LRV).',
+    respostaCorreta: true,
+    explicacao: 'Padrão industrial: 4 mA = LRV, 20 mA = URV, com detecção de falha (<3,6 mA, por exemplo).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'tec-016',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em medição de vazão por rotâmetro, a leitura é, em geral, pouco sensível à densidade do fluido.',
+    respostaCorreta: false,
+    explicacao: 'Rotâmetro depende de empuxo/arrasto; densidade e viscosidade influenciam a calibração.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-017',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma malha de controle de pressão de header de gás, uma válvula de controle pode atuar como elemento final para manter a pressão dentro de limites operacionais.',
+    respostaCorreta: true,
+    explicacao: 'Elemento final (válvula) manipula vazão/descarga para controlar pressão do sistema.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-018',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em bombas, o NPSH disponível deve ser maior ou igual ao NPSH requerido para reduzir risco de cavitação.',
+    respostaCorreta: true,
+    explicacao: 'Critério básico: \(NPSH_a \\ge NPSH_r\) para evitar vaporização local.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-019',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma linha de processo, aumentar a rugosidade interna tende a diminuir o fator de atrito e, portanto, as perdas de carga.',
+    respostaCorreta: false,
+    explicacao: 'Rugosidade geralmente aumenta perdas (eleva fator de atrito em regime turbulento).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-020',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em termodinâmica, a entalpia é uma função de estado, de modo que sua variação depende apenas dos estados inicial e final do sistema.',
+    respostaCorreta: true,
+    explicacao: 'Sendo função de estado, independe do caminho do processo.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-021',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em instrumentação, um sensor de pressão manométrica mede pressão relativa à pressão atmosférica.',
+    respostaCorreta: true,
+    explicacao: 'Manométrica (gauge) é referência atmosférica; absoluta usa vácuo como referência.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'tec-022',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em mecânica dos fluidos, o princípio de Pascal explica que a pressão aplicada a um fluido confinado se transmite igualmente em todas as direções.',
+    respostaCorreta: true,
+    explicacao: 'Base de sistemas hidráulicos e transmissão de pressão em fluido incompressível.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'tec-023',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em controle de processos, a ação derivativa é usada para antecipar tendências do erro, podendo reduzir overshoot em certos casos.',
+    respostaCorreta: true,
+    explicacao: 'Derivativo reage à variação do erro, ajudando resposta transitória (com cuidado a ruído).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-024',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma refinaria, o balanço de massa em regime permanente implica que a soma das vazões de entrada em um vaso é igual à soma das vazões de saída, desconsiderando acúmulo.',
+    respostaCorreta: true,
+    explicacao: 'Regime permanente: acúmulo \(\approx 0\); entradas = saídas.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'tec-025',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em medição de nível por pressão hidrostática, para líquido incompressível, a pressão no fundo depende da densidade, da gravidade e da altura da coluna.',
+    respostaCorreta: true,
+    explicacao: 'Relação: \(P=\\rho g h\) (mais pressão com maior coluna/densidade).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'tec-026',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em um sistema de controle, “setpoint” é o valor medido do processo, enquanto “process variable” é o valor desejado.',
+    respostaCorreta: false,
+    explicacao: 'Setpoint é o desejado; process variable (PV) é o valor medido.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'tec-027',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma válvula de controle com característica igual-percentage, pequenas variações de abertura em baixas aberturas produzem variações relativamente pequenas de vazão.',
+    respostaCorreta: true,
+    explicacao: 'Equal-percentage é “suave” no início e mais agressiva em maiores aberturas.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-028',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em um vaso separador trifásico (óleo/água/gás), turbulência excessiva pode prejudicar a separação, aumentando arraste entre fases.',
+    respostaCorreta: true,
+    explicacao: 'Turbulência promove emulsão/arraste; separação gravitacional exige escoamento mais calmo.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-029',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em trocadores de calor, incrustação (fouling) tende a aumentar o coeficiente global de transferência de calor, elevando a eficiência.',
+    respostaCorreta: false,
+    explicacao: 'Fouling adiciona resistência térmica; reduz troca de calor e eficiência.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-030',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em controle de vazão com medidor por diferencial de pressão, uma malha com compensação de raiz quadrada pode ser necessária para linearizar a relação entre sinal e vazão.',
+    respostaCorreta: true,
+    explicacao: 'Como \(Q\\propto \\sqrt{\\Delta P}\), a extração de raiz quadrada ajuda na linearização.',
+    dificuldade: Difficulty.dificil,
+  ),
+
+  // -------------------------
+  // +100 questões (Cebraspe • Certo/Errado)
+  // -------------------------
+
+  // -------------------------
+  // Português ( +25 )
+  // -------------------------
+  BankQuestion(
+    id: 'pt-021',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “A supervisão solicitou aos operadores atenção às válvulas de alívio”, o emprego de crase em “às válvulas” é obrigatório.',
+    respostaCorreta: true,
+    explicacao: 'Há preposição “a” + artigo “as” → “às”.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-022',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Assisti o treinamento de NR-10 ontem”, a regência do verbo “assistir” está adequada na norma-padrão.',
+    respostaCorreta: false,
+    explicacao: 'No sentido de “ver”, “assistir” é transitivo indireto: “assisti ao treinamento”.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-023',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Na frase “É proibido a entrada na área de processo sem EPI”, a concordância está correta.',
+    respostaCorreta: false,
+    explicacao: 'O correto é “É proibida a entrada…”, pois o núcleo “entrada” é feminino.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-024',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Segue anexo os relatórios de inspeção”, a concordância nominal está correta.',
+    respostaCorreta: false,
+    explicacao: 'O adjetivo deve concordar: “Seguem anexos os relatórios…” (ou “Segue anexo o relatório”).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-025',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Foram analisadas, pela equipe de SMS, as condições de ventilação do espaço confinado”, a pontuação é aceitável e não prejudica o sentido.',
+    respostaCorreta: true,
+    explicacao: 'As vírgulas isolam adjunto adverbial intercalado; a estrutura permanece clara.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-026',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'No período “O procedimento foi seguido; logo, o risco foi eliminado”, “logo” tem valor explicativo.',
+    respostaCorreta: false,
+    explicacao: 'Aqui “logo” é conclusivo (equivalente a “portanto”).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-027',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “A equipe comunicou-se a esta gerência”, pode haver crase em “a esta gerência”.',
+    respostaCorreta: false,
+    explicacao: 'Com demonstrativo “esta”, em geral não ocorre crase: “a esta gerência”.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-028',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'A reescrita de “A unidade parou porque houve falha no compressor” por “Houve falha no compressor, por isso a unidade parou” preserva a relação lógica.',
+    respostaCorreta: true,
+    explicacao: 'Ambas mantêm causa → consequência, apenas mudam a ordem.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-029',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Não se deve operar a caldeira sem inspeção”, a colocação pronominal poderia ser “Se não deve operar a caldeira…”, sem perda de correção.',
+    respostaCorreta: false,
+    explicacao: 'Com palavra negativa (“não”), a próclise é obrigatória: “Não se deve…”.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'pt-030',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “A equipe de operação informou que a válvula estava fechada”, o conectivo “que” introduz uma oração subordinada substantiva objetiva direta.',
+    respostaCorreta: true,
+    explicacao: '“Informou” pede complemento; a oração iniciada por “que” funciona como objeto direto.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-031',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'No trecho “Embora o procedimento exista, há falhas recorrentes na execução”, “embora” introduz ideia de causa.',
+    respostaCorreta: false,
+    explicacao: '“Embora” é concessivo (contraste), não causal.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-032',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'A frase “A gerência determinou a revisão dos P&IDs” pode ser reescrita como “Determinou-se a revisão dos P&IDs”, preservando a impessoalidade e a correção.',
+    respostaCorreta: true,
+    explicacao: 'Passiva sintética com “se” é aceitável; mantém foco na ação.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-033',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “As condições de operação, e os limites de alarme, foram atualizados”, as vírgulas são obrigatórias.',
+    respostaCorreta: false,
+    explicacao: 'Vírgulas isolando “e” não são obrigatórias e, muitas vezes, são inadequadas.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'pt-034',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Os relatórios referentes a incidentes foram encaminhados”, a preposição em “referentes a” pode ser substituída por “referentes à” sem alteração gramatical.',
+    respostaCorreta: false,
+    explicacao: 'A crase dependeria do termo seguinte; não se troca “a” por “à” automaticamente.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-035',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em interpretação, se um texto técnico afirma que “o controle foi eficaz, mas tardio”, infere-se que houve eficácia com prejuízo temporal.',
+    respostaCorreta: true,
+    explicacao: '“Mas” marca contraste: foi eficaz, porém ocorreu tarde (impacto no tempo).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-036',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Fui ao setor de instrumentação e à sala de controle”, a crase em “à sala” se justifica pela presença de artigo definido.',
+    respostaCorreta: true,
+    explicacao: 'Ir a + a sala = “à sala”; já “ao setor” (a + o).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-037',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Na frase “Necessitam-se de técnicos treinados”, a concordância verbal está correta.',
+    respostaCorreta: false,
+    explicacao: 'Em “necessitar de”, o “se” não forma passiva; a construção é inadequada (preferível: “Necessita-se de…”).',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'pt-038',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'A reescrita de “A equipe só liberou a PT depois da medição de gases” por “A equipe liberou a PT somente após a medição de gases” mantém o sentido.',
+    respostaCorreta: true,
+    explicacao: '“Só” e “somente” são equivalentes; “depois”/“após” mantêm a relação temporal.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-039',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “A equipe informou-lhe o resultado da inspeção”, a colocação do pronome oblíquo está correta.',
+    respostaCorreta: true,
+    explicacao: 'Ênclise após verbo é aceitável; “informou-lhe” é forma correta.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-040',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “A análise foi feita pela engenheira, cuja responsabilidade é a integridade dos vasos”, “cuja” estabelece relação de posse.',
+    respostaCorreta: true,
+    explicacao: '“Cuja” indica posse: responsabilidade pertence à engenheira.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'pt-041',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Trata-se de procedimentos críticos”, o verbo deve obrigatoriamente ir ao plural: “Tratam-se…”.',
+    respostaCorreta: false,
+    explicacao: '“Trata-se de” é expressão fixa/impessoal; costuma ficar no singular.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'pt-042',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'No trecho “A falha foi detectada, portanto o sistema foi isolado”, é recomendável o uso de vírgula antes de “portanto”.',
+    respostaCorreta: true,
+    explicacao: '“Portanto” é conclusivo e geralmente vem isolado por vírgula.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-043',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “Chegou-se a conclusões relevantes”, a concordância verbal no singular é obrigatória.',
+    respostaCorreta: true,
+    explicacao: 'Com “se” indeterminador e verbo intransitivo/ligação, mantém-se o singular (“chegou-se”).',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'pt-044',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em interpretação, a expressão “em caráter preventivo” indica que a ação foi tomada antes de ocorrer o dano.',
+    respostaCorreta: true,
+    explicacao: 'Preventivo remete a antecipação para evitar ocorrência/agravamento.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'pt-045',
+    materia: 'Português',
+    bloco: 'Básico',
+    enunciado:
+        'Em “A equipe reportou o incidente à liderança”, a crase em “à liderança” é opcional.',
+    respostaCorreta: false,
+    explicacao: '“Reportar a” + artigo “a” → crase obrigatória se “liderança” vier determinada.',
+    dificuldade: Difficulty.media,
+  ),
+
+  // -------------------------
+  // Matemática / RLM ( +25 )
+  // -------------------------
+  BankQuestion(
+    id: 'mat-021',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Em uma escala com 5 operadores, o número de maneiras de formar uma dupla (sem ordem) para uma ronda é 10.',
+    respostaCorreta: true,
+    explicacao: 'Combinação: \(\\binom{5}{2}=10\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-022',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se a probabilidade de um alarme ser verdadeiro é 0,7, então a probabilidade de ele ser falso é 0,4.',
+    respostaCorreta: false,
+    explicacao: 'Complemento: \(1-0,7=0,3\).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'mat-023',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Em análise combinatória, a quantidade de sequências possíveis de 3 procedimentos distintos escolhidos dentre 6, com ordem, é 120.',
+    respostaCorreta: true,
+    explicacao: 'Arranjo: \(A_{6,3}=6\\cdot 5\\cdot 4=120\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-024',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(A\\cup B = A\\), então necessariamente \(B\\subseteq A\\).',
+    respostaCorreta: true,
+    explicacao: 'Para a união não “aumentar”, B não pode ter elementos fora de A.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'mat-025',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(f(x)=x-5\\), então \(f(5)=0\\).',
+    respostaCorreta: true,
+    explicacao: 'Substituindo: \(5-5=0\).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'mat-026',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se dois eventos A e B são independentes e \(P(A)=0,2\\) e \(P(B)=0,5\\), então \(P(A\\cup B)=0,7\\).',
+    respostaCorreta: false,
+    explicacao: 'União: \(P(A)+P(B)-P(A)P(B)=0,2+0,5-0,1=0,6\).',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'mat-027',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Ao escolher ao acaso uma válvula entre 12, sendo 3 críticas, a probabilidade de escolher uma crítica é 1/4.',
+    respostaCorreta: true,
+    explicacao: '\(3/12=1/4\).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'mat-028',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(A\\subseteq B\\) e \(B\\subseteq A\\), então \(A=B\\).',
+    respostaCorreta: true,
+    explicacao: 'Dupla inclusão implica igualdade de conjuntos.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'mat-029',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'O número de maneiras de distribuir 4 tarefas distintas entre 4 pessoas distintas, uma para cada, é 24.',
+    respostaCorreta: true,
+    explicacao: 'Permutação: \(4!=24\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-030',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(f(x)=x^2-1\\), então \(f(0)=-1\\).',
+    respostaCorreta: true,
+    explicacao: 'Substituindo: \(0-1=-1\).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'mat-031',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Em probabilidade, se \(P(A\\cap B)=P(A)\\), então necessariamente \(P(B)=1\\).',
+    respostaCorreta: false,
+    explicacao: 'Só implica que \(A\\subseteq B\) (quando eventos), não que \(P(B)=1\).',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'mat-032',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(A\\cap B = A\\), então \(A\\subseteq B\\).',
+    respostaCorreta: true,
+    explicacao: 'Se a interseção devolve A, todo elemento de A está em B.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'mat-033',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Ao lançar uma moeda justa 3 vezes, a probabilidade de obter exatamente 2 caras é 3/8.',
+    respostaCorreta: true,
+    explicacao: 'Combinações: \(\\binom{3}{2}=3\) em \(2^3=8\) resultados.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-034',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(f\\) é função e \(f(2)=f(3)\\), então \(f\\) não pode ser injetiva.',
+    respostaCorreta: true,
+    explicacao: 'Injetividade exige valores distintos para entradas distintas; aqui há colisão.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-035',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(f(x)=ax+b\\) com \(a\\neq 0\\), então \(f\\) é sempre bijetiva em \(\\mathbb{R}\\).',
+    respostaCorreta: true,
+    explicacao: 'Função afim com \(a\\neq 0\\) é estritamente monotônica e tem inversa em \(\\mathbb{R}\\).',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'mat-036',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(P(A)=0,3\\) e \(P(A\\cap B)=0,3\\), então \(P(A\\mid B)=1\\) (com \(P(B)>0\\)).',
+    respostaCorreta: false,
+    explicacao: 'Seria \(P(A\\mid B)=P(A\\cap B)/P(B)=0,3/P(B)\); não necessariamente 1.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'mat-037',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'O número de maneiras de escolher 3 instrumentos dentre 7, sem ordem, é 35.',
+    respostaCorreta: true,
+    explicacao: 'Combinação: \(\\binom{7}{3}=35\).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-038',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(A\\) tem 4 elementos, então \(A\\times A\\) tem 8 pares ordenados.',
+    respostaCorreta: false,
+    explicacao: 'Produto cartesiano: \(4\\cdot 4=16\) pares.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-039',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Em uma função \(f\\), o domínio é o conjunto de valores possíveis de saída.',
+    respostaCorreta: false,
+    explicacao: 'Domínio é o conjunto de entradas; contradomínio/imagem estão ligados às saídas.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'mat-040',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se um evento tem probabilidade 0, então ele é impossível em sentido absoluto em qualquer modelo probabilístico.',
+    respostaCorreta: false,
+    explicacao: 'Em espaços contínuos, eventos possíveis podem ter probabilidade 0 (ex.: um ponto exato).',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'mat-041',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(f(x)=\\sqrt{x}\\), então o domínio real de \(f\\) é \(x\\ge 0\\).',
+    respostaCorreta: true,
+    explicacao: 'Raiz quadrada real exige radicando não negativo.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'mat-042',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Em uma seleção aleatória de 2 pessoas dentre 10, a ordem importa para a probabilidade do evento “as duas são de manutenção”.',
+    respostaCorreta: false,
+    explicacao: 'Para eventos de escolha sem reposição, a ordem não altera o resultado do evento.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-043',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(A\\) e \(B\\) são disjuntos, então \(P(A\\cup B)=P(A)+P(B)\\).',
+    respostaCorreta: true,
+    explicacao: 'Para eventos disjuntos, a soma direta vale.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'mat-044',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'O número de maneiras de escolher 0 elementos de um conjunto de 5 elementos é 0.',
+    respostaCorreta: false,
+    explicacao: 'Há exatamente 1 maneira: escolher o conjunto vazio (\(\\binom{5}{0}=1\)).',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'mat-045',
+    materia: 'Matemática/RLM',
+    bloco: 'Básico',
+    enunciado:
+        'Se \(f(x)=1/x\\), então \(f\\) não está definida em \(x=0\\).',
+    respostaCorreta: true,
+    explicacao: 'Divisão por zero é indefinida; domínio exclui 0.',
+    dificuldade: Difficulty.facil,
+  ),
+
+  // -------------------------
+  // SMS (Bloco I) ( +25 )
+  // -------------------------
+  BankQuestion(
+    id: 'sms-021',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-10, o bloqueio e a sinalização da fonte de energia fazem parte de medidas de controle para evitar reenergização acidental durante manutenção.',
+    respostaCorreta: true,
+    explicacao: 'LOTO e sinalização evitam energização inadvertida e reduzem risco de choque/arco elétrico.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-022',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'A NR-13 dispensa inspeção de segurança de caldeiras quando a unidade de refino está em parada total (shutdown).',
+    respostaCorreta: false,
+    explicacao: 'Parada não elimina necessidade de inspeções/avaliações; requisitos dependem de categoria e condições.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-023',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-33, antes da entrada em espaço confinado, devem ser identificados perigos e avaliados riscos, com medidas de controle definidas na PET.',
+    respostaCorreta: true,
+    explicacao: 'A PET formaliza controles, equipe, monitoramento e plano de emergência.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-024',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-06, o empregador não precisa treinar o trabalhador sobre uso, guarda e conservação do EPI, bastando fornecer o equipamento.',
+    respostaCorreta: false,
+    explicacao: 'Treinamento/orientação faz parte da obrigação do empregador, além do fornecimento.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-025',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-35, o sistema de proteção contra quedas deve considerar o fator de queda e a necessidade de limitar força de impacto no trabalhador.',
+    respostaCorreta: true,
+    explicacao: 'Planejamento inclui requisitos técnicos (absorvedor, ancoragem) para reduzir impacto e risco.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-026',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Em uma plataforma, a simples presença de detector de gás elimina a necessidade de ventilação em atividade de espaço confinado.',
+    respostaCorreta: false,
+    explicacao: 'Detector é monitoramento; ventilação pode ser medida de controle essencial.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-027',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-33, a equipe de resgate deve ser treinada e estar disponível, pois o resgate em espaço confinado envolve riscos semelhantes aos da entrada.',
+    respostaCorreta: true,
+    explicacao: 'Resgates improvisados frequentemente geram múltiplas vítimas; por isso há exigência de preparação.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-028',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-10, a proteção contra arco elétrico pode incluir barreiras, procedimentos, EPIs específicos e delimitação de áreas.',
+    respostaCorreta: true,
+    explicacao: 'A norma prevê medidas técnicas e administrativas para reduzir severidade/probabilidade de acidentes.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-029',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-13, o prontuário de um vaso de pressão é um documento que reúne informações de projeto, fabricação e histórico relevantes para a segurança.',
+    respostaCorreta: true,
+    explicacao: 'O prontuário subsidia inspeções e avaliação de integridade.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-030',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-06, a substituição de EPI danificado é responsabilidade exclusiva do empregado, independentemente de comunicação ao empregador.',
+    respostaCorreta: false,
+    explicacao: 'O empregador deve substituir quando danificado/extraviado, conforme regras e procedimentos internos.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-031',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-35, é permitido trabalhar em altura sem análise de risco quando a tarefa é rotineira e executada diariamente.',
+    respostaCorreta: false,
+    explicacao: 'Rotina não elimina necessidade de análise/planejamento; riscos variam com condições e mudanças.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-032',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-33, a medição de gases deve considerar possibilidade de estratificação, exigindo amostras em diferentes alturas do espaço confinado.',
+    respostaCorreta: true,
+    explicacao: 'Gases podem se concentrar no topo/fundo conforme densidade; medir em pontos distintos reduz falso “ok”.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-033',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-10, a documentação técnica atualizada de instalações elétricas auxilia na identificação de circuitos, fontes e pontos de seccionamento.',
+    respostaCorreta: true,
+    explicacao: 'Diagramas/esquemas atualizados reduzem erros e melhoram controle de energia.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-034',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-13, o registro de segurança de uma caldeira é irrelevante para a inspeção, pois a inspeção se baseia apenas em exame visual externo.',
+    respostaCorreta: false,
+    explicacao: 'Registros e histórico são fundamentais; inspeção envolve requisitos além de exame externo.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-035',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'O uso de cinturão paraquedista sem talabarte/absorvedor apropriado pode aumentar o risco de lesão em queda, mesmo que exista ancoragem.',
+    respostaCorreta: true,
+    explicacao: 'Sem absorção/adequação do sistema, a força de impacto pode ser excessiva.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-036',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-06, a higienização e manutenção do EPI podem ser exigidas do empregado, mas devem seguir orientações e condições estabelecidas.',
+    respostaCorreta: true,
+    explicacao: 'Há dever do empregado de conservar; mas o sistema de gestão do EPI deve ser definido e controlado.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-037',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-33, o vigia pode entrar no espaço confinado para auxiliar rapidamente o trabalhador, desde que use EPI.',
+    respostaCorreta: false,
+    explicacao: 'Vigia não deve entrar; o resgate deve seguir plano/equipe preparada para não ampliar vítimas.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-038',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-10, a capacitação e autorização para trabalhos elétricos são componentes da prevenção, além de medidas técnicas.',
+    respostaCorreta: true,
+    explicacao: 'A norma trata de pessoas, procedimentos e instalação (medidas organizacionais).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'sms-039',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-13, a integridade de vasos de pressão pode ser comprometida por corrosão interna, exigindo monitoramento e inspeções compatíveis com o mecanismo de dano.',
+    respostaCorreta: true,
+    explicacao: 'Mecanismos de dano orientam inspeção (espessura, ensaios, histórico).',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-040',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Em espaço confinado, a ventilação mecânica pode alterar leituras de detector, mas não elimina a necessidade de monitoramento contínuo quando há risco atmosférico.',
+    respostaCorreta: true,
+    explicacao: 'Ventilação é controle dinâmico; atmosfera pode variar durante o serviço.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-041',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-35, o acesso por escada fixa sempre dispensa o uso de proteção contra quedas, independentemente da altura.',
+    respostaCorreta: false,
+    explicacao: 'Altura e risco determinam necessidade de proteção; escada fixa não elimina risco.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-042',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-06, EPI sem CA válido não deve ser considerado adequado para proteção legalmente reconhecida.',
+    respostaCorreta: true,
+    explicacao: 'O CA valida conformidade e autorização de comercialização/uso do EPI.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'sms-043',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-10, a simples retirada do disjuntor do quadro elétrico garante desenergização segura, dispensando verificação de ausência de tensão.',
+    respostaCorreta: false,
+    explicacao: 'Desenergização segura inclui seccionamento, impedimento de reenergização e verificação de ausência de tensão.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-044',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Na NR-13, a periodicidade de inspeção pode variar conforme categoria do equipamento e histórico/condições de operação.',
+    respostaCorreta: true,
+    explicacao: 'A norma prevê critérios e prazos; categoria e integridade influenciam planejamento.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'sms-045',
+    materia: 'SMS',
+    bloco: 'Bloco I',
+    enunciado:
+        'Em trabalhos em altura, a seleção do ponto de ancoragem deve considerar resistência, posicionamento e compatibilidade com o sistema (linha de vida/talabarte).',
+    respostaCorreta: true,
+    explicacao: 'Ancoragem inadequada compromete todo o sistema de proteção contra quedas.',
+    dificuldade: Difficulty.dificil,
+  ),
+
+  // -------------------------
+  // Bloco II/III (Geral Técnico) ( +25 )
+  // -------------------------
+  BankQuestion(
+    id: 'tec-031',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em um compressor de gás em plataforma, aumentar a temperatura de sucção tende a reduzir a densidade do gás e pode impactar a capacidade volumétrica do equipamento.',
+    respostaCorreta: true,
+    explicacao: 'Temperatura maior reduz densidade; para mesma vazão volumétrica, muda a vazão mássica/capacidade.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-032',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Pela equação da continuidade, em escoamento incompressível, se a área da seção diminui, a velocidade tende a aumentar.',
+    respostaCorreta: true,
+    explicacao: 'Para incompressível: \(A\\cdot v = \\text{constante}\).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'tec-033',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'No princípio de Bernoulli (com hipóteses válidas), aumento de velocidade pode estar associado à redução de pressão estática.',
+    respostaCorreta: true,
+    explicacao: 'Em escoamento ideal, energia se conserva; maior energia cinética pode reduzir a parcela de pressão.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-034',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em um trocador de calor casco-tubo, aumentar a incrustação (fouling) tende a reduzir a transferência de calor, exigindo maior diferença de temperatura para o mesmo dever térmico.',
+    respostaCorreta: true,
+    explicacao: 'Fouling aumenta resistência térmica, reduz U e piora desempenho.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-035',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em instrumentação, histerese é a diferença de leitura para o mesmo valor de entrada quando o sinal está crescendo versus quando está decrescendo.',
+    respostaCorreta: true,
+    explicacao: 'Histerese é dependência do caminho; influencia precisão e repetibilidade.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-036',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma malha de controle, feedforward é uma estratégia que reage apenas ao erro entre PV e setpoint.',
+    respostaCorreta: false,
+    explicacao: 'Quem reage ao erro é feedback; feedforward antecipa perturbações medidas.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-037',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma válvula de alívio (PSV) de um vaso de pressão, o objetivo é proteger contra sobrepressão, descarregando para um sistema seguro (como flare), quando aplicável.',
+    respostaCorreta: true,
+    explicacao: 'PSV é barreira de segurança para sobrepressão, com descarga controlada.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-038',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em medição por termopar, a tensão gerada depende do gradiente de temperatura entre a junta de medição e a referência.',
+    respostaCorreta: true,
+    explicacao: 'Efeito Seebeck: diferença de temperatura gera FEM.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-039',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em processo isotérmico de gás ideal, o trabalho realizado depende apenas da variação de temperatura.',
+    respostaCorreta: false,
+    explicacao: 'Isotérmico tem \(\\Delta T=0\), mas há trabalho, dependendo do caminho (variação de volume).',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-040',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma linha de injeção de água, a presença de ar no sistema pode causar golpes de aríete e leituras instáveis em instrumentos de pressão.',
+    respostaCorreta: true,
+    explicacao: 'Bolhas e transientes hidráulicos podem causar oscilações e sobrepressões.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-041',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em um separador, a eficiência de separação óleo-gás pode ser influenciada por tamanho de gotículas, tempo de residência e dispositivos internos (demister).',
+    respostaCorreta: true,
+    explicacao: 'Internos e tempo de residência afetam coalescência e arraste.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-042',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em controle de temperatura de um trocador, aumentar a vazão do fluido de aquecimento sempre aumenta a temperatura de saída, independentemente das condições.',
+    respostaCorreta: false,
+    explicacao: 'Depende de limites de troca, cargas, saturação e dinâmica; nem sempre “sempre”.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-043',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em um P&ID, símbolos e tags ajudam a identificar instrumentos (ex.: PT, TT, LT) e a função na malha de controle.',
+    respostaCorreta: true,
+    explicacao: 'P&ID padroniza identificação e interligações de processo e instrumentação.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'tec-044',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em escoamento turbulento plenamente desenvolvido, o perfil de velocidade tende a ser mais “achatado” que no regime laminar.',
+    respostaCorreta: true,
+    explicacao: 'Turbulência mistura momento, tornando perfil mais uniforme que o parabólico laminar.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-045',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma malha PID, reduzir o tempo integral (tornando-o “mais agressivo”) pode aumentar a propensão a overshoot.',
+    respostaCorreta: true,
+    explicacao: 'Integral mais forte corrige rápido, podendo ultrapassar o setpoint e oscilar.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-046',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em medição de nível por radar, a constante dielétrica do produto pode influenciar a qualidade do eco e, portanto, a confiabilidade da leitura.',
+    respostaCorreta: true,
+    explicacao: 'Propriedades do produto afetam reflexão/eco, principalmente em condições difíceis.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-047',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma bomba centrífuga, operar muito afastado do ponto de melhor eficiência (BEP) pode aumentar vibração e reduzir vida útil.',
+    respostaCorreta: true,
+    explicacao: 'Fora do BEP há recirculação interna, forças hidráulicas e maior estresse.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-048',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em um vaso de pressão, a pressão absoluta é sempre menor que a pressão manométrica.',
+    respostaCorreta: false,
+    explicacao: 'Pressão absoluta = manométrica + atmosférica; portanto é maior (quando manométrica positiva).',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'tec-049',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em um sistema de flare, a finalidade é queimar com segurança gases de alívio/vent para reduzir risco de explosão e emissões não controladas.',
+    respostaCorreta: true,
+    explicacao: 'Flare é sistema de segurança para descarte controlado de hidrocarbonetos.',
+    dificuldade: Difficulty.facil,
+  ),
+  BankQuestion(
+    id: 'tec-050',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em termodinâmica, a segunda lei proíbe que um motor térmico converta integralmente calor em trabalho em um ciclo sem rejeitar calor.',
+    respostaCorreta: true,
+    explicacao: 'Enunciado de Kelvin-Planck: sempre há rejeição de calor (eficiência < 100%).',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-051',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em escoamento compressível de gás, a relação \(A\\cdot v\\) constante sempre vale, independentemente de variações de densidade.',
+    respostaCorreta: false,
+    explicacao: 'Para compressível, continuidade é \(\\rho A v = \\text{constante}\), não \(A v\\).',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-052',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em calibração de instrumentos, “as-found” descreve o comportamento do instrumento antes de ajustes, e “as-left” após ajustes.',
+    respostaCorreta: true,
+    explicacao: 'Termos de calibração: registra condição encontrada e condição deixada após intervenção.',
+    dificuldade: Difficulty.media,
+  ),
+  BankQuestion(
+    id: 'tec-053',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em controle de processo, um tempo morto (dead time) elevado tende a dificultar a sintonia e pode aumentar oscilações.',
+    respostaCorreta: true,
+    explicacao: 'Dead time reduz “visibilidade” do efeito da ação de controle, piorando estabilidade.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-054',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma válvula de controle, o “stiction” (atrito estático) pode causar resposta em degraus e ciclo-limite em malhas sensíveis.',
+    respostaCorreta: true,
+    explicacao: 'Atrito estático gera “travamento” e liberações súbitas, causando oscilação.',
+    dificuldade: Difficulty.dificil,
+  ),
+  BankQuestion(
+    id: 'tec-055',
+    materia: 'Geral Técnico',
+    bloco: 'Bloco II/III',
+    enunciado:
+        'Em uma planta de refino, a perda de carga em filtros aumenta com o acúmulo de sólidos, podendo exigir retrolavagem ou substituição para manter vazão.',
+    respostaCorreta: true,
+    explicacao: 'Entupimento aumenta \(\\Delta P\); manutenção/restauração do elemento reduz perdas.',
+    dificuldade: Difficulty.media,
+  ),
+];
+
+String _subjectIdForMateria(String materia) {
+  final m = materia.toLowerCase();
+  if (m.contains('portugu')) return 'pt';
+  if (m.contains('matem') || m.contains('rlm')) return 'mat';
+  if (m.contains('sms')) return 'sms';
+  // Geral técnico (bloco II/III) ainda não existe na HomeView, mas já deixamos preparado.
+  return 'tec';
+}
+
+/// Converte o banco para o modelo atual do app (`Question`), no formato Cebraspe (Certo/Errado).
+///
+/// Uso:
+/// ```dart
+/// final questions = QuestionBank.toQuizQuestions()..shuffle();
+/// ```
+class QuestionBank {
+  static List<Question> toQuizQuestions({
+    String? materia,
+    String? bloco,
+    Difficulty? dificuldade,
+  }) {
+    final filtered = questionBank.where((q) {
+      if (materia != null && q.materia != materia) return false;
+      if (bloco != null && q.bloco != bloco) return false;
+      if (dificuldade != null && q.dificuldade != dificuldade) return false;
+      return true;
+    });
+
+    return filtered
+        .map(
+          (q) => Question(
+            id: q.id,
+            subjectId: _subjectIdForMateria(q.materia),
+            statement: q.enunciado,
+            options: const ['Certo', 'Errado'],
+            correctIndex: q.respostaCorreta ? 0 : 1,
+            quickExplanation: q.explicacao,
+          ),
+        )
+        .toList();
+  }
+}
+

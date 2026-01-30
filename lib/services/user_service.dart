@@ -19,12 +19,13 @@ class UserService {
           .map((snap) {
         final data = snap.data() ?? <String, dynamic>{};
         final name = (data['displayName'] as String?)?.trim();
-        final score = (data['score'] as num?)?.toInt() ?? 0;
+        final totalScore =
+            (data['totalScore'] as num?)?.toInt() ?? (data['score'] as num?)?.toInt() ?? 0;
         final cargo = (data['cargoPretendido'] as String?)?.trim();
         return UserProfile(
           uid: user.uid,
           displayName: (name == null || name.isEmpty) ? 'Usuário' : name,
-          score: score,
+          score: totalScore,
           cargoPretendido: cargo ?? '',
         );
       });

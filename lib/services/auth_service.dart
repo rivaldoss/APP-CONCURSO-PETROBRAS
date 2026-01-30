@@ -32,6 +32,9 @@ class AuthService {
     await ref.set({
       'displayName': 'Usuário $suffix',
       'cargoPretendido': '',
+      // Campo novo para ranking (pontuação líquida acumulada).
+      'totalScore': 0,
+      // Campo antigo (compatibilidade).
       'score': 0,
       'createdAt': FieldValue.serverTimestamp(),
       'updatedAt': FieldValue.serverTimestamp(),

@@ -40,5 +40,17 @@ class SubjectsConstants {
         Topic(id: 'sms-primeiros-socorros', title: 'Primeiros Socorros'),
       ],
     ),
+    Subject(
+      id: 'tec',
+      title: 'Conhecimentos Específicos (Técnico)',
+      topics: [
+        Topic(id: 'tec-termo', title: 'Termodinâmica básica', priority: TopicPriority.high),
+        Topic(id: 'tec-fluidos', title: 'Mecânica dos fluidos', priority: TopicPriority.high),
+        Topic(id: 'tec-instrumentacao', title: 'Instrumentação', priority: TopicPriority.high),
+        Topic(id: 'tec-controle', title: 'Controle de processos', priority: TopicPriority.high),
+        Topic(id: 'tec-balancos', title: 'Balanços de massa e energia'),
+        Topic(id: 'tec-equipamentos', title: 'Equipamentos de processo (bombas/compressores)'),
+      ],
+    ),
   ];
 }

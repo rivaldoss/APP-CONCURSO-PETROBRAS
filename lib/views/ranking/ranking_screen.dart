@@ -138,7 +138,7 @@ class _RankingScreenState extends State<RankingScreen> {
                           children: [
                             Text('Top 10', style: TextStyle(fontWeight: FontWeight.w800)),
                             SizedBox(height: 4),
-                            Text('Cebraspe: +10 certo / -5 errado.'),
+                            Text('Cebraspe: +1 certo / -1 errado • Pular: 0'),
                           ],
                         ),
                       ),

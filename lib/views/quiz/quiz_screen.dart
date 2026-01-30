@@ -43,7 +43,8 @@ class _QuizScreenState extends State<QuizScreen> {
     if (_submitted) return;
     _submitted = true;
 
-    await _scoreService.addPoints(points: _controller.points);
+    // Para ranking competitivo: soma apenas a pontuação líquida (nunca negativa).
+    await _scoreService.addPoints(points: _controller.liquidPoints);
 
     final subjectId = widget.subjectId;
     if (subjectId != null) {
@@ -103,7 +104,7 @@ class _QuizView extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      'Pontos: ${controller.points}',
+                      'Líquido: ${controller.liquidPoints}',
                       style: TextStyle(color: cs.onSurfaceVariant, fontWeight: FontWeight.w800),
                     ),
                   ],
@@ -142,21 +143,37 @@ class _QuizView extends StatelessWidget {
             top: false,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-              child: SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  onPressed: controller.answered
-                      ? () async {
-                          if (controller.canGoNext()) {
-                            controller.next();
-                            return;
-                          }
-                          await onFinish();
-                          await _showFinishDialog(context, onRestart: onRestart);
-                        }
-                      : null,
-                  child: Text(controller.canGoNext() ? 'Próxima' : 'Finalizar'),
-                ),
+              child: Row(
+                children: [
+                  OutlinedButton(
+                    onPressed: controller.answered
+                        ? null
+                        : () {
+                            controller.skip();
+                            if (controller.canGoNext()) {
+                              controller.next();
+                              return;
+                            }
+                          },
+                    child: const Text('Pular'),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: FilledButton(
+                      onPressed: controller.answered
+                          ? () async {
+                              if (controller.canGoNext()) {
+                                controller.next();
+                                return;
+                              }
+                              await onFinish();
+                              await _showFinishDialog(context, onRestart: onRestart);
+                            }
+                          : null,
+                      child: Text(controller.canGoNext() ? 'Próxima' : 'Finalizar'),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -165,11 +182,23 @@ class _QuizView extends StatelessWidget {
     );
   }
 
+  String _motivation(int correct, int total) {
+    if (total <= 0) return 'Bora começar!';
+    final ratio = correct / total;
+    if (ratio < 0.5) return 'Continue focado!';
+    if (ratio >= 0.8) return 'Nível Superintendente!';
+    return 'Bom trabalho! Continue evoluindo.';
+  }
+
   Future<void> _showFinishDialog(
     BuildContext context, {
     required VoidCallback onRestart,
   }) async {
     final controller = context.read<QuizController>();
+    final total = controller.questions.length;
+    final raw = controller.rawPoints;
+    final liquid = controller.liquidPoints;
+    final motivation = _motivation(controller.correct, total);
 
     await showDialog<void>(
       context: context,
@@ -177,8 +206,9 @@ class _QuizView extends StatelessWidget {
         return AlertDialog(
           title: const Text('Resultado'),
           content: Text(
-            'Acertos: ${controller.correct} • Erros: ${controller.wrong}\n'
-            'Pontuação (Cebraspe): ${controller.points}',
+            'Acertos: ${controller.correct} | Erros: ${controller.wrong} | Pontuação Líquida: $liquid\n'
+            'Pontuação real (bruta): $raw\n'
+            '$motivation',
           ),
           actions: [
             TextButton(

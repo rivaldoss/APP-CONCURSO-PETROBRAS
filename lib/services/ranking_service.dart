@@ -11,28 +11,41 @@ class RankingService {
       return Stream.value(MockRanking.top10);
     }
 
+    List<RankingEntry> mapSnap(QuerySnapshot<Map<String, dynamic>> snap) {
+      final items = snap.docs.map((d) {
+        final data = d.data();
+        final name = (data['displayName'] as String?)?.trim();
+        final score =
+            (data['totalScore'] as num?)?.toInt() ?? (data['score'] as num?)?.toInt() ?? 0;
+        return RankingEntry(
+          userId: d.id,
+          displayName: (name == null || name.isEmpty) ? 'Usuário' : name,
+          score: score,
+        );
+      }).toList();
+
+      return items.isEmpty ? MockRanking.top10 : items;
+    }
+
+    // Preferimos `totalScore`, mas fazemos fallback para `score` se ainda não existir.
     try {
       return FirebaseFirestore.instance
           .collection('users')
-          .orderBy('score', descending: true)
+          .orderBy('totalScore', descending: true)
           .limit(10)
           .snapshots()
-          .map((snap) {
-        final items = snap.docs.map((d) {
-          final data = d.data();
-          final name = (data['displayName'] as String?)?.trim();
-          final score = (data['score'] as num?)?.toInt() ?? 0;
-          return RankingEntry(
-            userId: d.id,
-            displayName: (name == null || name.isEmpty) ? 'Usuário' : name,
-            score: score,
-          );
-        }).toList();
-
-        return items.isEmpty ? MockRanking.top10 : items;
-      });
+          .map(mapSnap);
     } catch (_) {
-      return Stream.value(MockRanking.top10);
+      try {
+        return FirebaseFirestore.instance
+            .collection('users')
+            .orderBy('score', descending: true)
+            .limit(10)
+            .snapshots()
+            .map(mapSnap);
+      } catch (_) {
+        return Stream.value(MockRanking.top10);
+      }
     }
   }
 
@@ -47,10 +60,11 @@ class RankingService {
       final myData = myDoc.data();
       if (myData == null) return null;
 
-      final myScore = (myData['score'] as num?)?.toInt() ?? 0;
+      final myScore =
+          (myData['totalScore'] as num?)?.toInt() ?? (myData['score'] as num?)?.toInt() ?? 0;
       final agg = await FirebaseFirestore.instance
           .collection('users')
-          .where('score', isGreaterThan: myScore)
+          .where('totalScore', isGreaterThan: myScore)
           .count()
           .get();
 

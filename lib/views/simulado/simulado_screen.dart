@@ -53,8 +53,8 @@ class _SimuladoScreenState extends State<SimuladoScreen> {
     if (_submitted) return;
     _submitted = true;
 
-    final bonus = _controller.remaining.inMinutes.clamp(0, 60);
-    final points = _controller.points + bonus;
+    // Pontuação líquida (nunca negativa) para não desmotivar.
+    final points = _controller.liquidPoints;
     await _scoreService.addPoints(points: points);
     await _historyService.addAttempt(
       mode: widget.mode,
@@ -62,7 +62,7 @@ class _SimuladoScreenState extends State<SimuladoScreen> {
       title: widget.title,
       total: _controller.questions.length,
       correct: _controller.correct,
-      bonus: bonus,
+      bonus: 0,
       points: points,
       remainingSeconds: _controller.remaining.inSeconds,
     );
@@ -88,8 +88,14 @@ class _SimuladoScreenState extends State<SimuladoScreen> {
     final correct = _controller.correct;
     final wrong = _controller.wrong;
     final remaining = _controller.remaining;
-    final bonus = remaining.inMinutes.clamp(0, 60);
-    final points = _controller.points + bonus;
+    final raw = _controller.rawPoints;
+    final liquid = _controller.liquidPoints;
+    final ratio = total <= 0 ? 0.0 : (correct / total);
+    final motivation = ratio < 0.5
+        ? 'Continue focado!'
+        : ratio >= 0.8
+            ? 'Nível Superintendente!'
+            : 'Bom trabalho! Continue evoluindo.';
 
     await showDialog<void>(
       context: context,
@@ -97,10 +103,10 @@ class _SimuladoScreenState extends State<SimuladoScreen> {
         return AlertDialog(
           title: const Text('Resultado do Simulado'),
           content: Text(
-            'Acertos: $correct • Erros: $wrong • Total: $total\n'
+            'Acertos: $correct | Erros: $wrong | Pontuação Líquida: $liquid\n'
+            'Pontuação real (bruta): $raw\n'
             'Tempo restante: ${_format(remaining)}\n'
-            'Pontuação: $points\n'
-            'Bônus tempo: +$bonus',
+            '$motivation',
           ),
           actions: [
             TextButton(
@@ -155,7 +161,7 @@ class _SimuladoView extends StatelessWidget {
                     const SizedBox(width: 8),
                     _Pill(
                       icon: Icons.bolt,
-                      text: 'Pontos: ${controller.points}',
+                      text: 'Líquido: ${controller.liquidPoints}',
                       background: cs.secondaryContainer,
                       foreground: cs.onSecondaryContainer,
                     ),
@@ -200,6 +206,18 @@ class _SimuladoView extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
               child: Row(
                 children: [
+                  OutlinedButton(
+                    onPressed: (controller.finished || controller.answered)
+                        ? null
+                        : () {
+                            controller.skip();
+                            if (controller.canGoNext()) {
+                              controller.next();
+                            }
+                          },
+                    child: const Text('Pular'),
+                  ),
+                  const SizedBox(width: 12),
                   OutlinedButton(
                     onPressed: controller.finished ? null : controller.finish,
                     child: const Text('Encerrar'),
